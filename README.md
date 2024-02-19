@@ -33,6 +33,60 @@ O agente taxista pode executar as seguintes ações:
 O resultado deste programa é imprimir uma lista de passos que o taxista deve
 seguir para concluir seu objetivo.
 
+## Metodologia
+
+Este programa utiliza uma heurística de Busca Informada para encontrar o caminho
+para o objetivo. O algoritmo opera sobre um grafo que representa o estado atual
+do mapa e as possíveis transições entre células da grade do mapa. Então o grafo
+é inundado, propagando os índices da célula da origem onde o taxi se encontra
+até a célula alvo, como a do passageiro ou do alvo final, de forma gradual. Ou
+seja, a inundação começa na célula do taxi, então vai para as células vizinha,
+as vezinhas da úlima iteração e assim em diante. Assim que uma das celulas
+atinge o alvo, a inundação é encerrada e obtém-se um conjunto de células
+candidatas para se encontrar o caminho entre o taxi e o alvo. Esta heurística
+permite sessionar a grade em uma região útil.
+
+A partir da região, é feito um subgrafo que representa tal região, a partir dela
+é possível executar o traçado do caminho até o objetivo. cada célula da grade
+possui identificação no grafo de acordo com dua linha e coluna, incrementando
+horizontalmente de cima para baixo da esquerda para a direita. A partir disso é
+possível estabelecer uma equivalência entre os nós do grafo original e do grafo
+resumido qual é representado na da forma de uma matriz quadrada de tamanho
+proporcional a área da grade. Segue uma matrix que representa uma grade 5x5 sem
+objstáculos, cujo caactere `#` representa uma possível transição a partir da
+célula da linha atual:
+
+```txt
+1  - . # . . . # . . . . . . . . . . . . . . . . . . . 
+2  - # . # . . . # . . . . . . . . . . . . . . . . . . 
+3  - . # . # . . . # . . . . . . . . . . . . . . . . . 
+4  - . . # . # . . . # . . . . . . . . . . . . . . . . 
+5  - . . . # . . . . . # . . . . . . . . . . . . . . . 
+6  - # . . . . . # . . . # . . . . . . . . . . . . . . 
+7  - . # . . . # . # . . . # . . . . . . . . . . . . . 
+8  - . . # . . . # . # . . . # . . . . . . . . . . . . 
+9  - . . . # . . . # . # . . . # . . . . . . . . . . . 
+10 - . . . . # . . . # . . . . . # . . . . . . . . . . 
+11 - . . . . . # . . . . . # . . . # . . . . . . . . . 
+12 - . . . . . . # . . . # . # . . . # . . . . . . . . 
+13 - . . . . . . . # . . . # . # . . . # . . . . . . . 
+14 - . . . . . . . . # . . . # . # . . . # . . . . . . 
+15 - . . . . . . . . . # . . . # . . . . . # . . . . . 
+16 - . . . . . . . . . . # . . . . . # . . . # . . . . 
+17 - . . . . . . . . . . . # . . . # . # . . . # . . . 
+18 - . . . . . . . . . . . . # . . . # . # . . . # . . 
+19 - . . . . . . . . . . . . . # . . . # . # . . . # .
+20 - . . . . . . . . . . . . . . # . . . # . . . . . #
+21 - . . . . . . . . . . . . . . . # . . . . . # . . .
+22 - . . . . . . . . . . . . . . . . # . . . # . # . .
+23 - . . . . . . . . . . . . . . . . . # . . . # . # .
+24 - . . . . . . . . . . . . . . . . . . # . . . # . #
+25 - . . . . . . . . . . . . . . . . . . . # . . . # .
+```
+
+No subgrafo, a partir da célula de origem, a próxima será dada pelo nó mais
+próximo em direção ao objetivo. Ou seja
+
 ## Instalando dependências
 
 ```sh
