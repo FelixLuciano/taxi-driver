@@ -85,7 +85,17 @@ célula da linha atual:
 ```
 
 No subgrafo, a partir da célula de origem, a próxima será dada pelo nó mais
-próximo em direção ao objetivo. Ou seja
+próximo em direção ao objetivo. Ou seja a próxima iteração será dada pelo
+próximo nó com identificador que se aproxima do alvo. Caso não haja candidatos
+ou todos já foram analisados, ou seja o programa está preso ou em loop, o nó é
+removido e adicionado a uma lista de rejeição não podem ser analisado novamente.
+Este processo segue até que se atinga o alvo. Este processo resulta em uma lista
+com uma sequencia de identificadores que levam da origem até o alvo em
+sequências de ações válidas de acordo com as restrições.
+
+Esta sequência de etapas é repetida da origem do taxi até o passageiro,
+adiciona-se a ação de embarcar o passageiro. Então é feita novamente até o
+desino final e adiciona-se a ação de desembarcar o passageiro do taxi.
 
 ## Instalando dependências
 
